@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { apiSlice } from './api/apiSlice'
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 export const store = configureStore({
   reducer: {
@@ -9,6 +10,8 @@ export const store = configureStore({
     getDefaultMiddleware().concat(apiSlice.middleware),
   devTools: true
 })
+
+setupListeners(store.dispatch)
 
 // A store is a JS object that holds the state of an application. It's a container that holds the state, actions and reducers that make up an app. The store has several responsibilities, including holding the state, updating the state, registering listener callbacks (through subscribe(listener)), and unregistering listeners
 /* 
