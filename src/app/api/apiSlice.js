@@ -3,7 +3,7 @@ import { setCredentials } from '../../features/auth/authSlice'
 
 // This baseQuery is applied to every request we send
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:3500',
+  baseUrl: 'https://technotes-api.onrender.com',
   // Ensure our cookie is always sent
   credentials: 'include',
   // Extract the token from application state, then set 'authorization' header with the Bearer token value

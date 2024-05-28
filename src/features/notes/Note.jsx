@@ -1,13 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
-
-import { useSelector } from 'react-redux'
-import { selectNoteById } from './notesApiSlice'
+import { useGetNotesQuery } from './notesApiSlice'
+import { memo } from 'react'
 
 const Note = ({ noteId }) => {
-  // The useSelector() hook acts as a closed equivalent to the mapStateToProps() function. It takes a function as its parameter, called the selector function. The selector function receives the redux state as its argument. It returns whatever is received by the selector function, in this case noteId.
-  const note = useSelector((state) => selectNoteById(state, noteId))
+  const { note } = useGetNotesQuery('notesList', {
+    selectFromResult: ({ data }) => ({
+      note: data?.entities[noteId]
+    })
+  })
 
   // This allows page navigation without the user having to click a link.
   const navigate = useNavigate()
@@ -48,4 +50,7 @@ const Note = ({ noteId }) => {
     )
   } else return null
 }
-export default Note
+// exporting memoizedNote instead of Note so component only re-renders if there are changes to the data
+const memoizedNote = memo(Note)
+
+export default memoizedNote
